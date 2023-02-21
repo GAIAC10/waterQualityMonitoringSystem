@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive Admin Dashboard Template">
+    <meta name="keywords" content="admin,dashboard">
+    <meta name="author" content="stacks">
+    <title>设备详细</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700,800&display=swap" rel="stylesheet">
+    <link href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/font-awesome/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/perfectscroll/perfect-scrollbar.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/apexcharts/apexcharts.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+    {#折线图ed#}
+    {#<script src="{% static 'js/new/highcharts-zh_CN.js' %}"></script>#}
+    {#<script src="{% static 'js/new/oldie.js' %}"></script>#}
+    {#<script src="{% static 'js/new/exporting.js' %}"></script>#}
+    {#<script src="{% static 'js/new/highcharts.js' %}"></script>#}
+    {#<script src="{% static 'js/new/chart.js' %}"></script>#}
+
+    {#折线图new#}
+    <meta charset="utf-8"><link rel="icon" href="https://jscdn.com.cn/highcharts/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* css 代码  */
+    </style>
+    <script src="https://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
+    <script src="https://cdn.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+    <script src="https://cdn.highcharts.com.cn/highcharts/modules/oldie.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+    <script src="https://cdn.highcharts.com.cn/highcharts/themes/grid-light.js"></script>
+
+		<style >
+            .ph_style{
+				color: red;
+			}
+			.tu_style{
+				color: red;
+			}
+			.tds_style{
+				color: red;
+			}
+            .tem_style{
+				color: red;
+			}
+		</style>
+
+</head>
+
+<body>
+    <div class="page-container">
+        <div class="page-header">
+            <nav class="navbar navbar-expand-lg d-flex justify-content-between">
+                <div class="" id="navbarNav">
+                    <ul class="navbar-nav" id="leftNav">
+                        <li class="nav-item"><a class="nav-link" id="sidebar-toggle" href="#"><i data-feather="arrow-left"></i></a></li>
+                    </ul>
+                </div>
+                <div class="logo"><a class="navbar-brand" href="{% url 'index:index' %}"></a></div>
+                <div class="" id="headerNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown"><a class="nav-link profile-dropdown" href="#" id="profileDropDown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{% static 'images/avatars/profile-image.png' %}" alt=""></a>
+                            <div class="dropdown-menu dropdown-menu-end profile-drop-menu"
+                                aria-labelledby="profileDropDown">
+{#								< 该方法可以准确的定位到任意网站 a class="dropdown-item" href="{% url 'usersss:login' %}"><i data-feather="log-out"></i>退出登录</a>#}
+                                    <a class="dropdown-item" href="{% url 'users:loginout' %}"><i data-feather="log-out"></i>退出登录</a>
+                                    <a class="dropdown-item" href="http://13.67.56.21:80/admin"><i data-feather="log-out"></i>管理员登陆</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="page-sidebar">
+            <ul class="list-unstyled accordion-menu">
+                <li class="sidebar-title">主菜单</li>
+                <li><a href="{% url 'index:index' %}"><i data-feather="list"></i>实时数据</a></li>
+                <li><a href="{% url 'index:history' %}"><i data-feather="pie-chart"></i>历史数据</a></li>
+                <li><a href="{% url 'index:map' %}"><i data-feather="edit"></i>设备位置</a></li>
+                <li><a href="{% url 'index:instrument' %}"><i data-feather="inbox"></i>设备列表</a></li>
+                <li><a href="{% url 'data:tang' %}"><i data-feather="home"></i>系统首页</a></li>
+            </ul>
+        </div>
+        <div class="page-content">
+            <div class="main-wrapper">
+                <div class="row">
+                    <div class="col-md-6 col-xl-3">
+                        <div class="card stat-widget">
+                            <div class="card-body">
+                                <h5 class="card-title">酸碱度 PH</h5><!-- PH显示 -->
+                                <h2 class="PH ph_style" id="ph">{{ PH }}</h2>
+                                <div class="progress">
+                                    <div class="progress-bar bg-info progress-bar-striped" role="progressbar" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xl-3"><!--浊度显示  -->
+                        <div class="card stat-widget">
+                            <div class="card-body">
+                                <h5 class="card-title">浊度 TU</h5>
+                                <h2 class="TU tu_style" id="tu">{{ TU }}</h2>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success progress-bar-striped" role="progressbar" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xl-3"><!-- TDS显示 -->
+                        <div class="card stat-widget">
+                            <div class="card-body">
+                                <h5 class="card-title">固体溶解度 TDS</h5>
+                                <h2 class="TDS tds_style" id="tds"> {{ TDS }}</h2>
+                                <div class="progress">
+                                    <div class="progress-bar bg-danger progress-bar-striped" role="progressbar" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xl-3">
+                        <div class="card stat-widget">
+                            <div class="card-body">
+                                <h5 class="card-title" >温度 TEM</h5>
+                                <h2 class="TEM tem_style" id="tem"> {{ TEM }}</h2>
+                                <div class="progress">
+                                    <div class="progress-bar bg-primary progress-bar-striped" role="progressbar" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+{#                <div>#}
+{#                    <iframe src="{% url 'index:chart' %}"  width="100%" height="580px"></iframe>#}
+{#                </div>#}
+
+
+{#                <div class="row">#}
+{#                    <div class="col-sm-6 col-xl-6">#}
+{#                        <div class="card">#}
+{#                            <div class="card-body">#}
+{#                                <h5 class="card-title">PH</h5>#}
+{#                                <div id="apex1"></div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="col-sm-6 col-xl-6">#}
+{#                        <div class="card stat-widget">#}
+{#                            <div class="card-body">#}
+{#                                <h5 class="card-title">TU</h5>#}
+{#                                <div id="apex2"></div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#                <div class="row">#}
+{#                    <div class="col-sm-6 col-xl-6">#}
+{#                        <div class="card">#}
+{#                            <div class="card-body">#}
+{#                                <h5 class="card-title">TDS</h5>#}
+{#                                <div id="apex3"></div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="col-sm-6 col-xl-6">#}
+{#                        <div class="card stat-widget">#}
+{#                            <div class="card-body">#}
+{#                                <h5 class="card-title">TEM</h5>#}
+{#                                <div id="apex4"></div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+<div class="row">
+                <div class="col-sm-6 col-xl-6">
+                    <div class="card stat-widget">
+                        <div class="card-body">
+                            <h5 class="card-title">PH</h5>
+                                <div id="container1" style="min-width:400px;height:400px"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-6">
+                    <div class="card stat-widget">
+                        <div class="card-body">
+                            <h5 class="card-title">TU</h5>
+                                <div id="container2" style="min-width:400px;height:400px"></div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+              <div class="row">
+                <div class="col-sm-6 col-xl-6">
+                    <div class="card stat-widget">
+                        <div class="card-body">
+                            <h5 class="card-title">TDS</h5>
+                                <div id="container3" style="min-width:400px;height:400px"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-6">
+                    <div class="card stat-widget">
+                        <div class="card-body">
+                            <h5 class="card-title">TEM</h5>
+                                <div id="container4" style="min-width:400px;height:400px"></div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascripts -->
+    <script src="{% static 'plugins/jquery/jquery-3.4.1.min.js'%}"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js'%}"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="{% static 'plugins/perfectscroll/perfect-scrollbar.min.js'%}"></script>
+    <script src="{% static 'plugins/apexcharts/apexcharts.min.js'%}"></script>
+    <script src="{% static 'js/main.min.js'%}"></script>
+    {#最开始的四个折线图#}
+    {#<script src="{% static 'js/pages/dashboard.js'%}"></script>#}
+
+
+    <script >
+		var ph1 = $('.PH')
+		var ph = $('.PH').text()
+		if(ph>8||ph<7){
+			ph1.addClass("ph_style")
+		}else{
+			ph1.removeClass("ph_style")
+		}
+    </script>
+
+    <script >
+        var tu1 = $('.TU')
+        var tu = $('.TU').text()
+        if(tu>500||tu<100){
+            tu1.addClass("tu_style")
+        }else{
+            tu1.removeClass("tu_style")
+        }
+    </script>
+
+    <script >
+        var tds1 = $('.TDS')
+        var tds = $('.TDS').text();
+        if(tds>1000){
+            tds1.addClass("tds_style")
+        }else{
+            tds1.removeClass("tds_style")
+        }
+    </script>
+
+    <script >
+        var tem1 = $('.TEM')
+        var tem = $('.TEM').text();
+        if(tem>30){
+            tem1.addClass("tem_style")
+        }else{
+            tem1.removeClass("tem_style")
+        }
+    </script>
+
+        {#ajax请求数据 陈俊霖写#}
+        {#<script>#}
+        {#var obj1 = document.getElementById('ph')#}
+        {#var num1 = obj1.innerText;#}
+        {#setInterval(function() {#}
+        {#    $.post(#}
+        {#        "url" ,#}
+        {#        'success':function(data) {#}
+        {#            console.log(data);#}
+        {#            obj1.innerText=data#}
+        {#        },#}
+        {#    );#}
+        {# }, 3000);#}
+        {#    </script>#}
+
+    {#<script>#}
+    {#余康写的#}
+    {#ajax请求数据#}
+    {#setInterval(function() {#}
+    {#    $.ajax({#}
+    {#        type:"GET",#}
+    {#        url:"http://127.0.0.1:8000/index/historys",#}
+            {#beforeSend: function(request) {#}
+            {#request.setRequestHeader("Authorization", token);#}
+        {# },#}
+    {#        success:function (result) {#}
+    {#            if (result['code']===200){#}
+    {#                var data1ph=result['data']['data1ph'];#}
+    {#            }#}
+    {#            else#}
+    {#            {#}
+    {#                console.log('index.html中ajax请求数据错误')#}
+    {#            }#}
+    {#       }#}
+    {#    })},3000);#}
+    {#</script>#}
+
+{#setTimeout(function() {#}
+{#        window.location.reload()#}
+{# }, 6000);#}
+
+        <script>
+        {#token = window.localStorage.getItem('dnblog_token');#}
+        {#username = window.localStorage.getItem('dnblog_user');#}
+        var obj1 = document.getElementById('ph');
+        var obj2 = document.getElementById('tu');
+        var obj3 = document.getElementById('tds');
+        var obj4 = document.getElementById('tem');
+        setInterval(function() {
+        $.ajax({
+            type:"GET",
+            url:"http://127.0.0.1:8000/index/historys",
+            async:false,
+            {#beforeSend: function(request) {#}
+            {#    request.setRequestHeader("Authorization", token);#}
+            {# },#}
+            success:function (result) {
+                if (result['code']===200){
+                    var dataph=result['data']['data1ph'];
+                    obj1.innerText = dataph;
+                    console.log(obj1.innerText);
+                    var datatu=result['data']['data1tu'];
+                    obj2.innerText = datatu;
+                    console.log(obj2.innerText);
+                    var datatds=result['data']['data1tds'];
+                    obj3.innerText = datatds;
+                    console.log(obj3.innerText);
+                    var datatem=result['data']['data1tem'];
+                    obj4.innerText = datatem;
+                    console.log(obj4.innerText);
+                }
+           }
+        });},3000);
+        </script>
+
+
+        {#折线图new_PH#}
+        <script>
+            var zongPh=[1,2,3,4,5,6,7,8];
+            {#PH的ajax请求#}
+            setInterval(function() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:8000/index/historys/",
+            async: false,
+            success: function(result) {
+                {#console.log(result);#}
+                if (result['code'] === 200) {
+                    var data1ph = result['data']['data1ph'];
+                    var data2ph = result['data']['data2ph'];
+                    var data3ph = result['data']['data3ph'];
+                    var data4ph = result['data']['data4ph'];
+                    var data5ph = result['data']['data5ph'];
+                    var data6ph = result['data']['data6ph'];
+                    var data7ph = result['data']['data7ph'];
+                    var data8ph = result['data']['data8ph'];
+                    var dataZongPh=[data1ph, data2ph, data3ph, data4ph, data5ph, data6ph, data7ph , data8ph];
+                    zongPh=dataZongPh;
+                    console.log(zongPh);
+                     var chart = Highcharts.chart('container1', {
+	chart: {
+		type: 'line'
+	},
+	title: {
+		text: '酸碱度(PH)'
+	},
+	xAxis: {
+		categories: [ 'Now' , 'Sun', 'Sat', 'Fri', 'Thur',  'Wed', 'Tue', 'Mon']
+	},
+	yAxis: {
+		title: {
+			text: 'PH'
+		}
+	},
+	plotOptions: {
+		line: {
+			dataLabels: {
+				// 开启数据标签
+				enabled: true
+			},
+			// 关闭鼠标跟踪，对应的提示框、点击事件会失效
+			enableMouseTracking: false
+		}
+	},
+	series: [{
+		name: '实时酸碱度',
+		data:zongPh
+	}]
+});
+
+                }}}, 3000);})
+        </script>
+
+        {#折线图new_TU#}
+        <script>
+            var zongTu=[1,2,3,4,5,6,7,8];
+            {#TU的ajax请求#}
+            setInterval(function() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:8000/index/historys/",
+            async: false,
+            success: function(result) {
+                {#console.log(result);#}
+                if (result['code'] === 200) {
+                    var data1tu=  result['data']['data1tu'];
+                    var data2tu = result['data']['data2tu'];
+                    var data3tu = result['data']['data3tu'];
+                    var data4tu = result['data']['data4tu'];
+                    var data5tu = result['data']['data5tu'];
+                    var data6tu = result['data']['data6tu'];
+                    var data7tu = result['data']['data7tu'];
+                    var data8tu = result['data']['data8tu'];
+                    var dataZongTu=[data1tu, data2tu, data3tu, data4tu, data5tu, data6tu, data7tu , data8tu];
+                    zongTu=dataZongTu;
+                    console.log(zongTu);
+                     var chart = Highcharts.chart('container2', {
+	chart: {
+		type: 'line'
+	},
+	title: {
+		text: '浊度(TU)'
+	},
+	xAxis: {
+		categories: [ 'Now' , 'Sun', 'Sat', 'Fri', 'Thur',  'Wed', 'Tue', 'Mon']
+	},
+	yAxis: {
+		title: {
+			text: 'TU'
+		}
+	},
+	plotOptions: {
+		line: {
+			dataLabels: {
+				// 开启数据标签
+				enabled: true
+			},
+			// 关闭鼠标跟踪，对应的提示框、点击事件会失效
+			enableMouseTracking: false
+		}
+	},
+	series: [{
+		name: '实时浊度',
+		data:zongTu
+	}]
+});}}}, 1000);})
+    </script>
+
+    {#折线图new_Tds#}
+    <script>
+                    var zongTds=[1,2,3,4,5,6,7,8];
+            {#Tds的ajax请求#}
+            setInterval(function() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:8000/index/historys/",
+            async: false,
+            success: function(result) {
+                {#console.log(result);#}
+                if (result['code'] === 200) {
+                    var data1tds = result['data']['data1tds'];
+                    var data2tds = result['data']['data2tds'];
+                    var data3tds = result['data']['data3tds'];
+                    var data4tds = result['data']['data4tds'];
+                    var data5tds = result['data']['data5tds'];
+                    var data6tds = result['data']['data6tds'];
+                    var data7tds = result['data']['data7tds'];
+                    var data8tds = result['data']['data8tds'];
+                    var dataZongTds=[data1tds, data2tds, data3tds, data4tds, data5tds, data6tds, data7tds , data8tds];
+                    zongTds=dataZongTds;
+                    console.log(zongTds);
+                     var chart = Highcharts.chart('container3', {
+	chart: {
+		type: 'line'
+	},
+	title: {
+		text: '固体溶解度(TDS)'
+	},
+	xAxis: {
+		categories: [ 'Now' , 'Sun', 'Sat', 'Fri', 'Thur',  'Wed', 'Tue', 'Mon']
+	},
+	yAxis: {
+		title: {
+			text: 'TDS'
+		}
+	},
+	plotOptions: {
+		line: {
+			dataLabels: {
+				// 开启数据标签
+				enabled: true
+			},
+			// 关闭鼠标跟踪，对应的提示框、点击事件会失效
+			enableMouseTracking: false
+		}
+	},
+	series: [{
+		name: '实时固体溶解度',
+		data:zongTds
+	}]
+});}}}, 1000);})
+    </script>
+
+    {#折线图new_Tem#}
+    <script>
+        var zongTem=[1,2,3,4,5,6,7,8];
+            {#Tem的ajax请求#}
+            setInterval(function() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:8000/index/historys/",
+            async: false,
+            success: function(result) {
+                {#console.log(result);#}
+                if (result['code'] === 200) {
+                    var data1tem = result['data']['data1tem'];
+                    var data2tem = result['data']['data2tem'];
+                    var data3tem = result['data']['data3tem'];
+                    var data4tem = result['data']['data4tem'];
+                    var data5tem = result['data']['data5tem'];
+                    var data6tem = result['data']['data6tem'];
+                    var data7tem = result['data']['data7tem'];
+                    var data8tem = result['data']['data8tem'];
+                    var dataZongTem=[data1tem, data2tem, data3tem, data4tem, data5tem, data6tem, data7tem , data8tem];
+                    zongTem=dataZongTem;
+                    console.log(zongTem);
+                     var chart = Highcharts.chart('container4', {
+	chart: {
+		type: 'line'
+	},
+	title: {
+		text: '温度(TEM)'
+	},
+	xAxis: {
+		categories: [ 'Now' , 'Sun', 'Sat', 'Fri', 'Thur',  'Wed', 'Tue', 'Mon']
+	},
+	yAxis: {
+		title: {
+			text: 'TEM'
+		}
+	},
+	plotOptions: {
+		line: {
+			dataLabels: {
+				// 开启数据标签
+				enabled: true
+			},
+			// 关闭鼠标跟踪，对应的提示框、点击事件会失效
+			enableMouseTracking: false
+		}
+	},
+	series: [{
+		name: '实时温度',
+		data:zongTem
+	}]
+});}}}, 1000);})
+    </script>
+</body>
+</html>

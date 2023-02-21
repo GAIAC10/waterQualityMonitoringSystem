@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>echarts-多折线图</title>
+    <script type="text/javascript" src="{% static 'js/chart/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/chart/echarts.min.js' %}"></script>
+    <style>
+        body,
+        html {
+            width: 99%;
+            height: 99%;
+            font-family: "微软雅黑";
+            font-size: 12px;
+        }
+
+        #someline {
+            width: 100%;
+            height: 99%;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            var chart = document.getElementById("someline");
+            var echart = echarts.init(chart);
+            option = {
+                title: {
+                    text: '折线图堆叠'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['ph']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    name: '邮件营销',
+                    type: 'line',
+                    stack: '总量',
+                    data: [120, 132, 101, 134, 90, 230, 210]
+                }, ]
+            };
+
+
+            echart.setOption(option);
+        });
+    </script>
+</head>
+
+<body>
+    <div id="someline"></div>
+</body>
+
+<script>
+    setInterval(function() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:8000/index/historys",
+            async: false,
+            success: function(result) {
+                if (result['code'] === 200) {
+                    var data1tem = result['data']['data1tem'];
+                    var data2tem = result['data']['data2tem'];
+                    var data3tem = result['data']['data3tem'];
+                    var data4tem = result['data']['data4tem'];
+                    var data5tem = result['data']['data5tem'];
+                    var data6tem = result['data']['data6tem'];
+                    var data7tem = result['data']['data7tem'];
+                    var dataZongTem = [data1tem, data2tem, data3tem, data4tem, data5tem, data6tem, data7tem];
+                    option.series[0]['data'] = dataZongTem;
+                    console.log(dataZongTem)
+                }
+            }
+        });
+    }, 3000);
+</script>
+
+
+</html>

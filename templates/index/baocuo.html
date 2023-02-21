@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive Admin Dashboard Template">
+    <meta name="keywords" content="admin,dashboard">
+    <meta name="author" content="stacks">
+    <!-- The above 6 meta tags *must* come first in the head;any other head content must come *after* these tags -->
+    <!-- Title -->
+    <title>报错数据</title>
+    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700,800&display=swap" rel="stylesheet">
+    <link href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/font-awesome/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/perfectscroll/perfect-scrollbar.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/DataTables/datatables.min.css' %}" rel="stylesheet">
+    <!-- Theme Styles -->
+    <link href="{% static 'css/main.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+	
+	<style >
+
+        {#下方没有该数据#}
+		{#@font-face {#}
+		{#  font-family: 'icomoon';#}
+		{#  src:  url('fonts/icomoon.eot?vtvr13');#}
+		{#  src:  url('fonts/icomoon.eot?vtvr13#iefix') format('embedded-opentype'),#}
+		{#    url('fonts/icomoon.ttf?vtvr13') format('truetype'),#}
+		{#    url('fonts/icomoon.woff?vtvr13') format('woff'),#}
+		{#    url('fonts/icomoon.svg?vtvr13#icomoon') format('svg');#}
+		{#  font-weight: normal;#}
+		{#  font-style: normal;#}
+		{#  font-display: block;#}
+		{# }#}
+
+		span1{
+			font-family: 'icomoon';
+			font-size:15px;
+		}
+	</style>
+</head>
+
+<body>
+    <div class="page-container">
+        <div class="page-header">
+            <nav class="navbar navbar-expand-lg d-flex justify-content-between">
+                <div class="" id="navbarNav">
+                    <ul class="navbar-nav" id="leftNav">
+                        <li class="nav-item">
+                            <a class="nav-link" id="sidebar-toggle" href="#"><i data-feather="arrow-left"></i></a>
+                    </ul>
+                </div>
+                <div class="logo">
+                    <a class="navbar-brand" href="index.html"></a>
+                </div>
+                <div class="" id="headerNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link profile-dropdown" href="#" id="profileDropDown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="../../assets/images/avatars/profile-image.png" alt=""></a>
+                            <div class="dropdown-menu dropdown-menu-end profile-drop-menu" aria-labelledby="profileDropDown">
+								<a class="dropdown-item" href="{% url 'usersss:loginout' %}"><i data-feather="log-out"></i>退出登录</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="page-sidebar">
+            <ul class="list-unstyled accordion-menu">
+                <li class="sidebar-title">主菜单</li>
+                <li><a href="{% url 'index:index' %}"><span1>&nbsp</span1>实时数据</a></li>
+                <li><a href="{% url 'index:baocuo' %}"><span1>&nbsp</span1></i>历史数据</a></li>
+            </ul>
+        </div>
+        <div class="page-content">
+            <div class="main-wrapper">
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">报错数据</h5>
+                                <table id="zero-conf" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>PH(溶液酸碱度)</th>
+                                            <th>TDS(可溶性物体浓度)</th>
+                                            <th>TU(溶液浊度)</th>
+                                            <th>位置</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Garrett Winters</td>
+                                            <td>Accountant</td>
+                                            <td>Tokyo</td>
+                                            <td>63</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashton Cox</td>
+                                            <td>Junior Technical Author</td>
+                                            <td>San Francisco</td>
+                                            <td>66</td>
+                                        </tr>
+                                    </tbody>
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Javascripts -->
+    <script src="{% static 'plugins/jquery/jquery-3.4.1.min.js' %}../../assets/"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="{% static 'plugins/perfectscroll/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/datatables.min.js' %}"></script>
+    <script src="{% static 'js/main.min.js' %}"></script>
+    <script src="{% static 'js/pages/datatables.js' %}"></script>
+</body>
+
+</html> 

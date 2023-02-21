@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive Admin Dashboard Template">
+    <meta name="keywords" content="admin,dashboard">
+    <meta name="author" content="stacks">
+    <title>历史数据</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700,800&display=swap" rel="stylesheet">
+    <link href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/font-awesome/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/perfectscroll/perfect-scrollbar.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/DataTables/datatables.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+    <style >
+            .ph_style{
+				color: red;
+			}
+			.ftu_style{
+				color: red;
+			}
+			.tds_style{
+				color: red;
+			}
+            .tem_style{
+				color: red;
+			}
+		</style>
+
+</head>
+
+<body>
+    <div class="page-container">
+        <div class="page-header">
+            <nav class="navbar navbar-expand-lg d-flex justify-content-between">
+                <div class="" id="navbarNav">
+                    <ul class="navbar-nav" id="leftNav">
+                        <li class="nav-item">
+                            <a class="nav-link" id="sidebar-toggle" href="#"><i data-feather="arrow-left"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="logo">
+                    <a class="navbar-brand" href="{% url 'index:index' %}"></a>
+                </div>
+                <div class="" id="headerNav">
+                    <ul class="navbar-nav">
+                        
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link profile-dropdown" href="#" id="profileDropDown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{% static 'images/avatars/profile-image.png' %}" alt=""></a>
+                            <div class="dropdown-menu dropdown-menu-end profile-drop-menu" aria-labelledby="profileDropDown">
+                                <a class="dropdown-item" href="{% url 'users:loginout'%}"><i data-feather="log-out"></i>退出登录</a>
+                                <a class="dropdown-item" href="/admin"><i data-feather="log-out"></i>管理员登陆</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="page-sidebar">
+            <ul class="list-unstyled accordion-menu">
+                <li class="sidebar-title">主菜单</li>
+                <li><a href="{% url 'index:index' %}"><i data-feather="list"></i>实时数据</a></li>
+                <li><a href="{% url 'index:history' %}"><i data-feather="pie-chart"></i>历史数据</a></li>
+                <li><a href="{% url 'index:map' %}"><i data-feather="edit"></i>设备位置</a></li>
+                <li><a href="{% url 'index:instrument' %}"><i data-feather="inbox"></i>设备列表</a></li>
+                <li><a href="{% url 'data:tang' %}"><i data-feather="home"></i>系统首页</a></li>
+            </ul>
+        </div>
+        <div class="page-content">
+            <div class="main-wrapper">
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">历史数据</h5>
+                                <table id="zero-conf" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>NUM(序号)</th>
+                                            <th >PH(溶液酸性物体浓度)</th>
+                                            <th>TU(溶液碱度)</th>
+                                            <th>TDS(可溶浊度)</th>
+                                            <th>TEM(温度)</th>
+                                            <th>LOC(位置)</th>
+                                            <th>TIM(时间)</th>
+                                        </tr>
+                                    </thead>
+{#                                    <tbody>#}
+{#                                    <tr>#}
+{#                                       <td class="PH ph_style">#}
+{#                                           {% for data in datas %}#}
+{#                                           {{ data.PH }}#}
+{#                                           {% endfor %}</td>#}
+{##}
+{#                                        <td class="TU ftu_style">{% for data in datas %}#}
+{#                                           {{ data.TU }}#}
+{#                                           {% endfor %}</td>#}
+{##}
+{#                                      <td class="TDS tds_style">{% for data in datas %}#}
+{#                                           {{ data.TDS }}#}
+{#                                           {% endfor %}</td>#}
+{##}
+{#                                      <td>(256,496)</td>#}
+{##}
+{#                                      <td>{% for data in datas %}#}
+{#                                           {{ data.created_time }}#}
+{#                                           {% endfor %}<td>#}
+{#                                    <tr>#}
+{#                                        </tbody>#}
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ data1.id }}</td>
+                                            <td class="PH ph_style">{{ data1.PH }}</td>
+                                            <td class="TU tu_style">{{ data1.TU }}</td>
+                                            <td class="TDS tds_style">{{ data1.TDS }}</td>
+                                            <td class="TEM tem_style">{{ data1.TEM }}</td>
+                                            <td>(256,496)</td>
+                                            <td>{{ data1.created_time }}<td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ data2.id }}</td>
+                                            <td class="PH ph_style">{{ data2.PH }}</td>
+                                            <td class="TU tu_style">{{ data2.TU }}</td>
+                                            <td class="TDS tds_style">{{ data2.TDS }}</td>
+                                            <td class="TEM tem_style">{{ data2.TEM }}</td>
+                                            <td>(256,496)</td>
+                                            <td>{{ data2.created_time }}<td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ data3.id }}</td>
+                                            <td class="PH ph_style">{{ data3.PH }}</td>
+                                            <td class="TU tu_style">{{ data3.TU }}</td>
+                                            <td class="TDS tds_style">{{ data3.TDS }}</td>
+                                            <td class="TEM tem_style">{{ data3.TEM }}</td>
+                                            <td>(256,496)</td>
+                                            <td>{{ data3.created_time }}<td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ data4.id }}</td>
+                                            <td class="PH ph_style">{{ data4.PH }}</td>
+                                            <td class="TU tu_style">{{ data4.TU }}</td>
+                                            <td class="TDS tds_style">{{ data4.TDS }}</td>
+                                            <td class="TEM tem_style">{{ data4.TEM }}</td>
+                                            <td>(256,496)</td>
+                                            <td>{{ data4.created_time }}<td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ data5.id }}</td>
+                                            <td class="PH ph_style">{{ data5.PH }}</td>
+                                            <td class="TU tu_style">{{ data5.TU }}</td>
+                                            <td class="TDS tds_style">{{ data5.TDS }}</td>
+                                            <td class="TEM tem_style">{{ data5.TEM }}</td>
+                                            <td>(256,496)</td>
+                                            <td>{{ data5.created_time }}<td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ data6.id }}</td>
+                                            <td class="PH ph_style">{{ data6.PH }}</td>
+                                            <td class="TU tu_style">{{ data6.TU }}</td>
+                                            <td class="TDS tds_style">{{ data6.TDS }}</td>
+                                            <td class="TEM tem_style">{{ data6.TEM }}</td>
+                                            <td>(256,496)</td>
+                                            <td>{{ data6.created_time }}<td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ data7.id }}</td>
+                                            <td class="PH ph_style">{{ data7.PH }}</td>
+                                            <td class="TU tu_style">{{ data7.TU }}</td>
+                                            <td class="TDS tds_style">{{ data7.TDS }}</td>
+                                            <td class="TEM tem_style">{{ data7.TEM }}</td>
+                                            <td>(256,496)</td>
+                                            <td>{{ data7.created_time }}<td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ data8.id }}</td>
+                                            <td class="PH ph_style">{{ data8.PH }}</td>
+                                            <td class="TU tu_style">{{ data8.TU }}</td>
+                                            <td class="TDS tds_style">{{ data8.TDS }}</td>
+                                            <td class="TEM tem_style">{{ data8.TEM }}</td>
+                                            <td>(256,496)</td>
+                                            <td>{{ data8.created_time }}<td>
+                                        </tr>
+                                                                            <tr>
+                                            <td>{{ data9.id }}</td>
+                                            <td class="PH ph_style">{{ data9.PH }}</td>
+                                            <td class="TU tu_style">{{ data9.TU }}</td>
+                                            <td class="TDS tds_style">{{ data9.TDS }}</td>
+                                            <td class="TEM tem_style">{{ data9.TEM }}</td>
+                                            <td>(256,496)</td>
+                                            <td>{{ data9.created_time }}<td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ data10.id }}</td>
+                                            <td class="PH ph_style">{{ data10.PH }}</td>
+                                            <td class="TU tu_style">{{ data10.TU }}</td>
+                                            <td class="TDS tds_style">{{ data10.TDS }}</td>
+                                            <td class="TEM tem_style">{{ data10.TEM }}</td>
+                                            <td>(256,496)</td>
+                                            <td>{{ data10.created_time }}<td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ data11.id }}</td>
+                                            <td class="PH ph_style">{{ data11.PH }}</td>
+                                            <td class="TU tu_style">{{ data11.TU }}</td>
+                                            <td class="TDS tds_style">{{ data11.TDS }}</td>
+                                            <td class="TEM tem_style">{{ data11.TEM }}</td>
+                                            <td>(256,496)</td>
+                                            <td>{{ data11.created_time }}<td>
+                                        </tr>                                        <tr>
+                                            <td>{{ data12.id }}</td>
+                                            <td class="PH ph_style">{{ data12.PH }}</td>
+                                            <td class="TU tu_style">{{ data12.TU }}</td>
+                                            <td class="TDS tds_style">{{ data12.TDS }}</td>
+                                            <td class="TEM tem_style">{{ data12.TEM }}</td>
+                                            <td>(256,496)</td>
+                                            <td>{{ data12.created_time }}<td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascripts -->
+    <script src="{% static 'plugins/jquery/jquery-3.4.1.min.js' %}"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="{% static 'plugins/perfectscroll/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/datatables.min.js' %}"></script>
+    <script src="{% static 'js/main.min.js' %}"></script>
+    <script src="{% static 'js/pages/datatables.js' %}"></script>
+
+    {# <script>#}
+    {# setTimeout(function() {#}
+    {#        window.location.reload()#}
+    {# }, 7000);#}
+    {# </script>#}
+
+        <script >
+		var ph1 = $('.PH')
+		var ph = $('.PH').text()
+		if(ph>8||ph<7){
+			ph1.addClass("ph_style")
+            ph.val('')
+		}else{
+			ph1.removeClass("ph_style")
+		}
+		</script>
+
+        <script >
+			var tu1 = $('.TU')
+			var tu = $('.TU').text()
+			if(tu>500||tu<100){
+				tu1.addClass("tu_style")
+			}else{
+				tu1.removeClass("tu_style")
+			}
+		</script>
+
+			<script >
+				var tds1 = $('.TDS')
+				var tds = $('.TDS').text()
+				if(tds>1000){
+					tds1.addClass("tds_style")
+				}else{
+					tds1.removeClass("tds_style")
+				}
+			</script>
+
+        <script >
+        var tem1 = $('.TEM')
+        var tem = $('.TEM').text();
+        if(tem>30){
+            tem1.addClass("tem_style")
+        }else{
+            tem1.removeClass("tem_style")
+        }
+        </script>
+
+</body>
+</html> 
